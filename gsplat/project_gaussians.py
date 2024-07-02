@@ -6,7 +6,7 @@ from jaxtyping import Float
 from torch import Tensor
 from torch.autograd import Function
 
-import gsplat.cuda as _C
+import gsplat.mps as _C
 
 
 def project_gaussians(

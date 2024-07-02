@@ -6,7 +6,7 @@ from jaxtyping import Float, Int
 from torch import Tensor
 import torch
 
-import gsplat.cuda as _C
+import gsplat.mps as _C
 
 
 def map_gaussian_to_intersects(

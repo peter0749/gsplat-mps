@@ -11,7 +11,7 @@ exec(open("gsplat/version.py", "r").read())
 
 URL = "https://github.com/nerfstudio-project/gsplat"  # TODO
 
-BUILD_NO_CUDA = os.getenv("BUILD_NO_CUDA", "0") == "1"
+BUILD_NO_MPS = os.getenv("BUILD_NO_MPS", "0") == "1"
 WITH_SYMBOLS = os.getenv("WITH_SYMBOLS", "0") == "1"
 LINE_INFO = os.getenv("LINE_INFO", "0") == "1"
 
@@ -25,10 +25,10 @@ def get_ext():
 def get_extensions():
     import torch
     from torch.__config__ import parallel_info
-    from torch.utils.cpp_extension import CUDAExtension
+    from torch.utils.cpp_extension import CppExtension
 
-    extensions_dir = osp.join("gsplat", "cuda", "csrc")
-    sources = glob.glob(osp.join(extensions_dir, "*.cu")) + glob.glob(
+    extensions_dir = osp.join("gsplat", "mps", "csrc")
+    sources = glob.glob(osp.join(extensions_dir, "*.mm")) + glob.glob(
         osp.join(extensions_dir, "*.cpp")
     )
     # sources = [
@@ -87,7 +87,7 @@ def get_extensions():
     if sys.platform == "win32":
         extra_compile_args["nvcc"] += ["-DWIN32_LEAN_AND_MEAN"]
 
-    extension = CUDAExtension(
+    extension = CppExtension(
         f"gsplat.csrc",
         sources,
         include_dirs=[osp.join(extensions_dir, "third_party", "glm")],
@@ -104,7 +104,7 @@ setup(
     name="gsplat",
     version=__version__,
     description=" Python package for differentiable rasterization of gaussians",
-    keywords="gaussian, splatting, cuda",
+    keywords="gaussian, splatting, mps",
     url=URL,
     download_url=f"{URL}/archive/gsplat-{__version__}.tar.gz",
     python_requires=">=3.7",
@@ -129,8 +129,8 @@ setup(
             "ninja",
         ],
     },
-    ext_modules=get_extensions() if not BUILD_NO_CUDA else [],
-    cmdclass={"build_ext": get_ext()} if not BUILD_NO_CUDA else {},
+    ext_modules=get_extensions() if not BUILD_NO_MPS else [],
+    cmdclass={"build_ext": get_ext()} if not BUILD_NO_MPS else {},
     packages=find_packages(),
     # https://github.com/pypa/setuptools/issues/1461#issuecomment-954725244
     include_package_data=True,

@@ -19,7 +19,7 @@ class SimpleTrainer:
         gt_image: Tensor,
         num_points: int = 2000,
     ):
-        self.device = torch.device("cuda:0")
+        self.device = torch.device("mps")
         self.gt_image = gt_image.to(device=self.device)
         self.num_points = num_points
 

@@ -21,7 +21,7 @@ class SimpleTrainer:
         gt_image: Tensor,
         num_points: int = 2000,
     ):
-        self.device = torch.device("cuda:0")
+        self.device = torch.device("mps")
         self.gt_image = gt_image.to(device=self.device)
         self.num_points = num_points
 
@@ -104,7 +104,7 @@ class SimpleTrainer:
                 self.W,
                 self.tile_bounds,
             )
-            torch.cuda.synchronize()
+            # torch.cuda.synchronize()
             times[0] += time.time() - start
             start = time.time()
             out_img = _RasterizeGaussians.apply(
@@ -119,13 +119,13 @@ class SimpleTrainer:
                 self.W,
                 self.background,
             )
-            torch.cuda.synchronize()
+            # torch.cuda.synchronize()
             times[1] += time.time() - start
             loss = mse_loss(out_img, self.gt_image)
             optimizer.zero_grad()
             start = time.time()
             loss.backward()
-            torch.cuda.synchronize()
+            # torch.cuda.synchronize()
             times[2] += time.time() - start
             optimizer.step()
             print(f"Iteration {iter + 1}/{iterations}, Loss: {loss.item()}")

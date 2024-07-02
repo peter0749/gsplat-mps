@@ -8,7 +8,7 @@ device = torch.device("cuda:0")
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="No CUDA device")
 def test_project_gaussians_forward():
     from gsplat import _torch_impl
-    import gsplat.cuda as _C
+    import gsplat.mps as _C
 
     torch.manual_seed(42)
 
@@ -28,7 +28,14 @@ def test_project_gaussians_forward():
     BLOCK_X, BLOCK_Y = 16, 16
     tile_bounds = (W + BLOCK_X - 1) // BLOCK_X, (H + BLOCK_Y - 1) // BLOCK_Y, 1
 
-    (cov3d, xys, depths, radii, conics, num_tiles_hit,) = _C.project_gaussians_forward(
+    (
+        cov3d,
+        xys,
+        depths,
+        radii,
+        conics,
+        num_tiles_hit,
+    ) = _C.project_gaussians_forward(
         num_points,
         means3d,
         scales,
