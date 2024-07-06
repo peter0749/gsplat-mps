@@ -2,7 +2,7 @@
 
 **NOTICE**: The default branch for this repository is `opensplat-mps`, based on tag 0.1.3 of `gsplat`. This is the only branch with MPS-related changes, the `main` branch is irrelevant for this project. **`gsplat-mps` was tested with Python 3.10.14**.
 
-This is a fork of [gsplat](https://github.com/nerfstudio-project/gsplat) version 0.1.3 ported to Apple MPS (Metal Performance Shaders), thanks to [OpenSplat's Metal implementation](https://github.com/pierotofy/OpenSplat/tree/main/rasterizer/gsplat-metal). It is not thoroughly tested, but I can confirm that (at time of writing) the `examples/image_fitting.py` script runs correctly on my device. Below is the quick start I used to get this module up and running on my device - please see the original repository's readme for more information.
+This is a fork of [gsplat](https://github.com/nerfstudio-project/gsplat) version 0.1.3 ported to Apple MPS (Metal Performance Shaders), thanks to [OpenSplat's Metal implementation](https://github.com/pierotofy/OpenSplat/tree/main/rasterizer/gsplat-metal). It is not thoroughly tested, but I can confirm that (at time of writing) the `examples/simple_trainer.py` script runs correctly on my device. Below is the quick start I used to get this module up and running on my device - please see the original repository's readme for more information.
 
 ```sh
 git clone --recursive https://github.com/iffyloop/gsplat-mps.git
